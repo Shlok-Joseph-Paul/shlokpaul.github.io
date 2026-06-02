@@ -90,6 +90,16 @@ function renderReviews() {
   container.innerHTML = reviewsHtml;
 }
 
+function normalizeReviews(reviews) {
+  return reviews.map(review => ({
+    ...review,
+    summary: `${review.reviewCount} public review${review.reviewCount === 1 ? "" : "s"}`,
+    yearsLabel: review.years.length > 0
+      ? `Years active: ${review.years.join(", ")}`
+      : "Year not listed"
+  }));
+}
+
 function getReviewJournalTitle(group) {
   const peerReviewId = group?.["external-ids"]?.["external-id"]?.find(
     id => id["external-id-type"] === "peer-review"
@@ -98,6 +108,33 @@ function getReviewJournalTitle(group) {
   const issn = peerReviewId.replace(/^issn:/i, "");
 
   return REVIEW_JOURNAL_TITLES[issn] || "";
+}
+
+async function loadReviewFallback() {
+  const response = await fetch("orcid-reviews.json", {
+    headers: {
+      Accept: "application/json"
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error("Could not load review fallback data.");
+  }
+
+  const reviews = await response.json();
+
+  allReviews = normalizeReviews(reviews).sort((a, b) => {
+    const aLatestYear = a.years[0] || "";
+    const bLatestYear = b.years[0] || "";
+
+    if (Number(bLatestYear || 0) !== Number(aLatestYear || 0)) {
+      return Number(bLatestYear || 0) - Number(aLatestYear || 0);
+    }
+
+    return b.reviewCount - a.reviewCount;
+  });
+
+  renderReviews();
 }
 
 async function loadOrcidPublications() {
@@ -218,24 +255,25 @@ async function loadOrcidReviews() {
       }
 
       return b.reviewCount - a.reviewCount;
-    }).map(review => ({
-      ...review,
-      summary: `${review.reviewCount} public review${review.reviewCount === 1 ? "" : "s"}`,
-      yearsLabel: review.years.length > 0
-        ? `Years active: ${review.years.join(", ")}`
-        : "Year not listed"
-    }));
+    });
+
+    allReviews = normalizeReviews(allReviews);
 
     renderReviews();
   } catch (error) {
-    container.innerHTML = `
-      <p>Review activity could not be loaded from ORCID right now.</p>
-      <p>
-        <a href="https://orcid.org/${ORCID_ID}" target="_blank" rel="noopener">
-          View reviews on ORCID
-        </a>
-      </p>
-    `;
+    try {
+      await loadReviewFallback();
+    } catch (fallbackError) {
+      container.innerHTML = `
+        <p>Review activity could not be loaded from ORCID right now.</p>
+        <p>
+          <a href="https://orcid.org/${ORCID_ID}" target="_blank" rel="noopener">
+            View reviews on ORCID
+          </a>
+        </p>
+      `;
+      console.error(fallbackError);
+    }
     console.error(error);
   }
 }
