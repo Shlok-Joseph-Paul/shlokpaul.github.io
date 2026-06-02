@@ -1,10 +1,15 @@
 const ORCID_ID = "0000-0001-8038-5497"; // Replace this with your ORCID iD
+const REVIEW_JOURNAL_TITLES = {
+  "1749-4893": "Nature Photonics",
+  "0884-2914": "Journal of Materials Research"
+};
 
 const INITIAL_PUBLICATION_COUNT = 3;
 const PUBLICATIONS_PER_CLICK = 5;
 
 let allPublications = [];
 let visibleCount = INITIAL_PUBLICATION_COUNT;
+let allReviews = [];
 
 function escapeHtml(value) {
   return String(value || "")
@@ -65,6 +70,34 @@ function renderPublications() {
       renderPublications();
     });
   }
+}
+
+function renderReviews() {
+  const container = document.getElementById("orcid-reviews");
+
+  if (!container) {
+    return;
+  }
+
+  const reviewsHtml = allReviews.map(review => `
+    <article class="publication-card">
+      <h3>${escapeHtml(review.organization)}</h3>
+      <p>${escapeHtml(review.summary)}</p>
+      <p>${escapeHtml(review.yearsLabel)}</p>
+    </article>
+  `).join("");
+
+  container.innerHTML = reviewsHtml;
+}
+
+function getReviewJournalTitle(group) {
+  const peerReviewId = group?.["external-ids"]?.["external-id"]?.find(
+    id => id["external-id-type"] === "peer-review"
+  )?.["external-id-value"] || "";
+
+  const issn = peerReviewId.replace(/^issn:/i, "");
+
+  return REVIEW_JOURNAL_TITLES[issn] || "";
 }
 
 async function loadOrcidPublications() {
@@ -130,4 +163,82 @@ async function loadOrcidPublications() {
   }
 }
 
+async function loadOrcidReviews() {
+  const container = document.getElementById("orcid-reviews");
+
+  if (!container) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://pub.orcid.org/v3.0/${ORCID_ID}/peer-reviews`, {
+      headers: {
+        Accept: "application/json"
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error("Could not load ORCID peer reviews.");
+    }
+
+    const data = await response.json();
+    const groups = data.group || [];
+
+    if (groups.length === 0) {
+      container.innerHTML = "<p>No public ORCID peer reviews found.</p>";
+      return;
+    }
+
+    allReviews = groups.map(group => {
+      const reviewSummaries = (group["peer-review-group"] || [])
+        .flatMap(item => item["peer-review-summary"] || []);
+
+      const organization =
+        getReviewJournalTitle(group) ||
+        reviewSummaries[0]?.["convening-organization"]?.name ||
+        reviewSummaries[0]?.source?.["source-name"]?.value ||
+        "Review activity";
+
+      const reviewCount = reviewSummaries.length;
+      const years = [...new Set(
+        reviewSummaries
+          .map(summary => summary["completion-date"]?.year?.value)
+          .filter(Boolean)
+      )].sort((a, b) => Number(b) - Number(a));
+
+      return {
+        organization,
+        reviewCount,
+        years,
+        latestYear: years[0] || ""
+      };
+    }).sort((a, b) => {
+      if (Number(b.latestYear || 0) !== Number(a.latestYear || 0)) {
+        return Number(b.latestYear || 0) - Number(a.latestYear || 0);
+      }
+
+      return b.reviewCount - a.reviewCount;
+    }).map(review => ({
+      ...review,
+      summary: `${review.reviewCount} public review${review.reviewCount === 1 ? "" : "s"}`,
+      yearsLabel: review.years.length > 0
+        ? `Years active: ${review.years.join(", ")}`
+        : "Year not listed"
+    }));
+
+    renderReviews();
+  } catch (error) {
+    container.innerHTML = `
+      <p>Review activity could not be loaded from ORCID right now.</p>
+      <p>
+        <a href="https://orcid.org/${ORCID_ID}" target="_blank" rel="noopener">
+          View reviews on ORCID
+        </a>
+      </p>
+    `;
+    console.error(error);
+  }
+}
+
 loadOrcidPublications();
+loadOrcidReviews();
