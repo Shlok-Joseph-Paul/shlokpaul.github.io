@@ -250,3 +250,35 @@ h3 {
   .card-grid { grid-template-columns: 1fr; }
   .contact-section { flex-direction: column; align-items: flex-start; padding: 34px; }
 }
+
+
+.publication-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.publication-card {
+  padding: 1.25rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  background: #ffffff;
+}
+
+.publication-card h3 {
+  margin: 0 0 0.4rem;
+  font-size: 1rem;
+}
+
+.publication-card p {
+  margin: 0.25rem 0;
+  color: #4b5563;
+}
+
+.publication-card a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.publication-card a:hover {
+  text-decoration: underline;
+}
