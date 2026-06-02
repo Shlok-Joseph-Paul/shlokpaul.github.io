@@ -282,3 +282,16 @@ h3 {
 .publication-card a:hover {
   text-decoration: underline;
 }
+
+
+.show-more-row {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.show-more-row .pub-meta {
+  margin: 0;
+}
