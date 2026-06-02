@@ -137,18 +137,14 @@ h3 {
   box-shadow: var(--shadow);
 }
 
-.profile-placeholder {
+.profile-image {
   height: 150px;
   width: 150px;
   border-radius: 50%;
-  background: linear-gradient(135deg, var(--accent), #7d8cff);
-  color: white;
-  display: grid;
-  place-items: center;
-  font-size: 3rem;
-  font-weight: 800;
-  letter-spacing: -0.08em;
+  object-fit: cover;
+  display: block;
   margin-bottom: 24px;
+  border: 1px solid var(--border);
 }
 
 .hero-card h2 { font-size: 1.8rem; margin-bottom: 8px; }
