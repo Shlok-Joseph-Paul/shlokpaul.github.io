@@ -101,6 +101,15 @@ main {
   color: var(--text);
 }
 
+.nav-links a.active {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.nav-links a.active::after {
+  transform: scaleX(1);
+}
+
 .nav-links a:hover::after {
   transform: scaleX(1);
 }
@@ -182,6 +191,16 @@ h3 {
   align-items: start;
   min-height: calc(100vh - 74px);
   padding-top: 72px;
+}
+
+.page-hero {
+  padding-top: 96px;
+  padding-bottom: 24px;
+}
+
+.page-title {
+  max-width: 13ch;
+  margin-bottom: 18px;
 }
 
 .hero-content {

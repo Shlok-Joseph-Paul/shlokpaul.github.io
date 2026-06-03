@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Articles by and about Shlok Paul, including publications, reviews, and manually curated news coverage." />
+  <title>Articles | Shlok Paul</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">Shlok Paul</a>
+      <div class="nav-links">
+        <a href="index.html">Research</a>
+        <a href="about.html">About</a>
+        <a class="active" href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero section narrow">
+      <p class="eyebrow">Articles</p>
+      <h1 class="page-title">Publications, news coverage, and review activity.</h1>
+      <p class="hero-text">
+        This page combines formal publication output, manually curated news mentions, and public scholarly review activity.
+      </p>
+    </section>
+
+    <section id="publications" class="section narrow">
+      <div class="section-heading compact">
+        <p class="section-label">Publications</p>
+        <h2>Selected publication record</h2>
+      </div>
+      <p class="note">
+        This list is pulled from my public ORCID record. For the most complete citation list, see my
+        <a href="https://orcid.org/0000-0001-8038-5497" target="_blank" rel="noopener">ORCID profile</a>.
+      </p>
+
+      <div id="orcid-publications" class="publication-list">
+        <div class="publication">
+          <p class="pub-title">Loading publications from ORCID...</p>
+          <p class="pub-meta">If this does not load, please visit my ORCID profile directly.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section narrow">
+      <div class="section-heading compact">
+        <p class="section-label">News</p>
+        <h2>News articles and media</h2>
+      </div>
+      <p class="note">
+        Add news coverage, feature articles, interviews, or institutional writeups here manually as they become available.
+      </p>
+      <div class="publication-list">
+        <article class="publication-card">
+          <h3>News article placeholder</h3>
+          <p>Add a title, publication, date, and link here.</p>
+        </article>
+        <article class="publication-card">
+          <h3>Feature story placeholder</h3>
+          <p>Use this section for press coverage, lab spotlights, or broader science communication pieces.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="reviews" class="section narrow">
+      <div class="section-heading compact">
+        <p class="section-label">Service</p>
+        <h2>Review activity</h2>
+      </div>
+      <p class="note">
+        This list is pulled from my public ORCID peer review record and highlights publicly visible review activity.
+      </p>
+
+      <div id="orcid-reviews" class="review-list">
+        <div class="publication">
+          <p class="pub-title">Loading review activity from ORCID...</p>
+          <p class="pub-meta">If this does not load, please visit my ORCID profile directly.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Shlok Paul. Built with GitHub Pages.</p>
+  </footer>
+
+  <script src="orcid-publications.js"></script>
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="About Shlok Paul — materials scientist working on quantum dots, infrared devices, and automated scientific workflows." />
+  <title>About | Shlok Paul</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav">
+      <a class="brand" href="index.html">Shlok Paul</a>
+      <div class="nav-links">
+        <a href="index.html">Research</a>
+        <a class="active" href="about.html">About</a>
+        <a href="articles.html">Articles</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-hero section narrow">
+      <p class="eyebrow">About</p>
+      <h1 class="page-title">Scientific identity and research perspective.</h1>
+      <p class="hero-text">
+        I work on solution-processed semiconductor nanomaterials and optoelectronic devices, with a particular focus on colloidal quantum dots for near- and short-wave infrared applications.
+      </p>
+    </section>
+
+    <section class="section">
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>
+            My research focuses on solution-processed semiconductor nanomaterials and optoelectronic devices, especially
+            colloidal quantum dots for near- and short-wave infrared detection. I develop materials, device architectures,
+            fabrication methods, and characterization workflows that connect fundamental photophysics to practical device performance.
+          </p>
+          <p>
+            I am especially interested in heavy-metal-free infrared materials, scalable thin-film deposition, device automation,
+            and the use of modern data and machine-learning workflows to accelerate experimental materials discovery.
+          </p>
+          <p>
+            Across these projects, I try to build a research style that treats materials synthesis, device engineering,
+            instrumentation, and data analysis as one connected system rather than separate steps.
+          </p>
+        </div>
+        <aside class="context-panel">
+          <p class="context-title">Current themes</p>
+          <ul class="context-list">
+            <li>Infrared-active colloidal nanomaterials for practical optoelectronics</li>
+            <li>Measurement systems that make device studies faster and more reproducible</li>
+            <li>Data-rich experimental workflows that support scientific scale-up</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Shlok Paul. Built with GitHub Pages.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
