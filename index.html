@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="style.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Source+Serif+4:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
   <header class="site-header">
@@ -34,9 +34,29 @@
           I am a materials scientist working at the intersection of colloidal quantum dots, infrared photodetectors,
           thin-film fabrication, spectroscopy, and experimental automation.
         </p>
+        <div class="hero-highlights">
+          <span>Colloidal quantum dot synthesis</span>
+          <span>Infrared photodetectors</span>
+          <span>Thin-film fabrication</span>
+          <span>Experimental automation</span>
+        </div>
         <div class="button-row">
           <a class="button primary" href="#research">View Research</a>
           <a class="button secondary" href="assets/shlokjoseph.paul.cv.pdf">Download CV</a>
+        </div>
+        <div class="hero-stats" aria-label="Research profile highlights">
+          <div>
+            <strong>Research Focus</strong>
+            <span>Heavy-metal-free infrared materials and device physics</span>
+          </div>
+          <div>
+            <strong>Methods</strong>
+            <span>Solution processing, spectroscopy, automation, and data workflows</span>
+          </div>
+          <div>
+            <strong>Current Role</strong>
+            <span>Postdoctoral Researcher at Los Alamos National Laboratory</span>
+          </div>
         </div>
       </div>
       <aside class="hero-card">
@@ -46,7 +66,21 @@
           alt="Portrait of Shlok Paul"
         />
         <h2>Shlok Paul</h2>
-        <p>Postdoctoral Researcher<br />Los Alamos National Laboratory</p>
+        <p class="hero-role">Postdoctoral Researcher<br />Los Alamos National Laboratory</p>
+        <div class="profile-details">
+          <div>
+            <span class="detail-label">Research</span>
+            <span>Quantum-dot optoelectronics, carrier dynamics, and infrared devices</span>
+          </div>
+          <div>
+            <span class="detail-label">Approach</span>
+            <span>Bridging materials synthesis, device engineering, and measurement automation</span>
+          </div>
+          <div>
+            <span class="detail-label">Interests</span>
+            <span>Scalable fabrication, AI-for-science workflows, and reproducible experimentation</span>
+          </div>
+        </div>
         <div class="quick-links">
           <a href="mailto:sjp553@nyu.edu">Email</a>
           <a href="https://scholar.google.com/citations?user=aXkkDCoAAAAJ&hl=en">Google Scholar</a>
@@ -56,18 +90,32 @@
       </aside>
     </section>
 
-    <section id="about" class="section narrow">
-      <p class="section-label">About</p>
-      <h2>About me</h2>
-      <p>
-        My research focuses on solution-processed semiconductor nanomaterials and optoelectronic devices, especially
-        colloidal quantum dots for near- and short-wave infrared detection. I develop materials, device architectures,
-        fabrication methods, and characterization workflows that connect fundamental photophysics to practical device performance.
-      </p>
-      <p>
-        I am especially interested in heavy-metal-free infrared materials, scalable thin-film deposition, device automation,
-        and the use of modern data and machine-learning workflows to accelerate experimental materials discovery.
-      </p>
+    <section id="about" class="section">
+      <div class="section-heading">
+        <p class="section-label">About</p>
+        <h2>About me</h2>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>
+            My research focuses on solution-processed semiconductor nanomaterials and optoelectronic devices, especially
+            colloidal quantum dots for near- and short-wave infrared detection. I develop materials, device architectures,
+            fabrication methods, and characterization workflows that connect fundamental photophysics to practical device performance.
+          </p>
+          <p>
+            I am especially interested in heavy-metal-free infrared materials, scalable thin-film deposition, device automation,
+            and the use of modern data and machine-learning workflows to accelerate experimental materials discovery.
+          </p>
+        </div>
+        <aside class="context-panel">
+          <p class="context-title">Current themes</p>
+          <ul class="context-list">
+            <li>Infrared-active colloidal nanomaterials for practical optoelectronics</li>
+            <li>Measurement systems that make device studies faster and more reproducible</li>
+            <li>Data-rich experimental workflows that support scientific scale-up</li>
+          </ul>
+        </aside>
+      </div>
     </section>
 
     <section id="research" class="section">
@@ -112,12 +160,15 @@
     </section>
 
     <section id="projects" class="section split">
-      <div>
+      <div class="split-intro">
         <p class="section-label">Projects</p>
         <h2>Technical portfolio</h2>
         <p>
           Beyond publications, I build experimental tools and analysis workflows that make device fabrication and characterization
           more reproducible, scalable, and data-rich.
+        </p>
+        <p class="split-note">
+          This work sits between bench science and infrastructure: building the systems that make better experiments possible.
         </p>
       </div>
       <div class="project-list">
@@ -137,10 +188,13 @@
     </section>
 
     <section id="publications" class="section narrow">
-      <h2>Publications</h2>
+      <div class="section-heading compact">
+        <p class="section-label">Publications</p>
+        <h2>Selected publication record</h2>
+      </div>
       <p class="note">
         This list is pulled from my public ORCID record. For the most complete citation list, see my
-        <a href="https://orcid.org/YOUR-ORCID-ID" target="_blank" rel="noopener">ORCID profile</a>.
+        <a href="https://orcid.org/0000-0001-8038-5497" target="_blank" rel="noopener">ORCID profile</a>.
       </p>
 
       <div id="orcid-publications" class="publication-list">
@@ -156,12 +210,23 @@
         <p class="section-label">Contact</p>
         <h2>Interested in quantum dots, infrared devices, or AI-for-science?</h2>
         <p>Feel free to reach out about research collaborations, postdoctoral work, industry roles, or technical projects.</p>
+        <div class="contact-points">
+          <span>Collaborations</span>
+          <span>Scientific discussions</span>
+          <span>Technical consulting</span>
+        </div>
       </div>
-      <a class="button primary" href="mailto:sjp553@nyu.edu">Email me</a>
+      <div class="contact-actions">
+        <a class="button primary" href="mailto:sjp553@nyu.edu">Email me</a>
+        <p class="contact-note">Best for research discussions, project inquiries, and collaboration opportunities.</p>
+      </div>
     </section>
 
     <section id="reviews" class="section narrow">
-      <h2>Reviews</h2>
+      <div class="section-heading compact">
+        <p class="section-label">Service</p>
+        <h2>Review activity</h2>
+      </div>
       <p class="note">
         This list is pulled from my public ORCID peer review record and highlights publicly visible review activity.
       </p>
