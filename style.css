@@ -512,6 +512,12 @@ h3 {
   margin-top: 28px;
 }
 
+.news-list {
+  display: grid;
+  gap: 16px;
+  margin-top: 28px;
+}
+
 .publication-card,
 .publication {
   padding: 22px 24px;
@@ -523,6 +529,33 @@ h3 {
 
 .publication-card a:hover {
   text-decoration: underline;
+}
+
+.news-card {
+  display: grid;
+  grid-template-columns: 120px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.news-thumb {
+  width: 120px;
+  height: 88px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  border: 1px solid rgba(24, 36, 43, 0.08);
+}
+
+.news-content h3 {
+  margin-bottom: 8px;
+}
+
+.news-source {
+  color: var(--accent);
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 6px;
 }
 
 .pub-title {
@@ -662,6 +695,15 @@ h3 {
   .card-grid,
   .quick-links {
     grid-template-columns: 1fr;
+  }
+
+  .news-card {
+    grid-template-columns: 1fr;
+  }
+
+  .news-thumb {
+    width: 100%;
+    height: 190px;
   }
 
   .hero-card,
