@@ -454,6 +454,43 @@ h3 {
   margin-bottom: 16px;
 }
 
+.context-title:not(:first-child) {
+  margin-top: 26px;
+}
+
+.path-list {
+  display: grid;
+  gap: 14px;
+}
+
+.path-item {
+  padding-top: 14px;
+  border-top: 1px solid rgba(24, 36, 43, 0.08);
+}
+
+.path-item:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.path-item strong,
+.path-item span:last-child {
+  display: block;
+}
+
+.path-item strong {
+  margin-top: 5px;
+  color: var(--text);
+  line-height: 1.35;
+}
+
+.path-item span:last-child {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 0.96rem;
+  line-height: 1.45;
+}
+
 .context-list {
   margin: 0;
   padding-left: 20px;
