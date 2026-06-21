@@ -203,6 +203,34 @@ h3 {
   margin-bottom: 18px;
 }
 
+.page-jumps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 28px;
+}
+
+.page-jumps a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 1px solid rgba(35, 79, 105, 0.14);
+  background: rgba(255, 253, 248, 0.72);
+  color: var(--accent);
+  font-size: 0.93rem;
+  font-weight: 700;
+  transition: transform 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+.page-jumps a:hover {
+  color: var(--text);
+  border-color: rgba(35, 79, 105, 0.35);
+  transform: translateY(-1px);
+}
+
 .hero-content {
   padding: 20px 0 0;
 }
