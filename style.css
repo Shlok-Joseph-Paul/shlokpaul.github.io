@@ -930,8 +930,8 @@ h3 {
   transition: color 0.18s ease;
 }
 
-.reading-item:has(a:hover) a,
-.reading-item:has(a:focus-visible) a {
+.reading-item h3 a:hover,
+.reading-item h3 a:focus-visible {
   color: var(--accent);
 }
 
@@ -945,6 +945,67 @@ h3 {
   border-radius: 50%;
   color: var(--accent);
   font-size: 1.05rem;
+}
+
+.reading-series {
+  align-items: start;
+  padding-block: 32px;
+}
+
+.reading-series h3 {
+  max-width: none;
+}
+
+.reading-series-count {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reading-series-links {
+  display: grid;
+  gap: 0;
+  max-width: 48rem;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--border);
+}
+
+.reading-series-links a {
+  display: grid;
+  grid-template-columns: 4.25rem minmax(0, 1fr) auto;
+  gap: 14px;
+  align-items: center;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  font-weight: 650;
+}
+
+.reading-series-links a > span:first-child {
+  color: var(--accent);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.reading-series-links a > span:last-child {
+  color: var(--accent);
+  transition: transform 0.18s ease;
+}
+
+.reading-series-links a:hover,
+.reading-series-links a:focus-visible {
+  color: var(--accent);
+}
+
+.reading-series-links a:hover > span:last-child,
+.reading-series-links a:focus-visible > span:last-child {
+  transform: translate(2px, -2px);
 }
 
 .show-more-row {
