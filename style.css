@@ -893,7 +893,9 @@ h3 {
 }
 
 .reading-category-heading h2 {
+  max-width: 24ch;
   font-size: clamp(1.65rem, 4vw, 2.35rem);
+  text-align: right;
 }
 
 .reading-category-heading-secondary {
@@ -920,6 +922,18 @@ h3 {
   font-weight: 800;
   letter-spacing: 0.13em;
   text-transform: uppercase;
+}
+
+.reading-length {
+  color: var(--muted);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.reading-length::before {
+  content: "·";
+  margin: 0 0.55em;
+  color: var(--border-strong);
 }
 
 .reading-item h3 {
@@ -1235,6 +1249,16 @@ h3 {
 
   .reading-category-heading-secondary {
     margin-top: 48px;
+  }
+
+  .reading-category-heading {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .reading-category-heading h2 {
+    text-align: left;
   }
 
   .button-row,
