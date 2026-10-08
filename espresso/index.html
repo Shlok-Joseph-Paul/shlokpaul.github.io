@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#241c18">
+<meta name="description" content="A private, local-first espresso shot journal with recipes, history, tasting notes, and charts.">
+<title>Shot Lab | Espresso Journal</title>
+<style>
+:root{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#2b211c;background:#f6f1eb;font-synthesis:none}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+a{color:inherit}
+header{background:#241c18;color:#fdf2e4;padding:18px max(20px,calc((100vw - 1120px)/2));display:flex;align-items:center;justify-content:space-between;gap:18px}
+.brand{display:flex;align-items:center;gap:12px;font-size:21px;font-weight:800;letter-spacing:-.05em}
+.brand-mark{width:34px;height:34px;border-radius:12px;background:#c08a5c;color:#241c18;display:grid;place-items:center;font-size:21px}
+header a{font-size:13px;color:#ebceb5;text-decoration:none}
+.container{max-width:1120px;margin:auto;padding:35px 20px 64px}
+.hero{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:28px}
+.eyebrow{color:#9f6338;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:800;margin:0 0 7px}
+h1{font-size:clamp(29px,5vw,45px);letter-spacing:-.065em;line-height:1.08;margin:0 0 9px;font-weight:800}
+h2{font-size:20px;letter-spacing:-.04em;margin:0}
+h3{font-size:14px;margin:0 0 10px}
+.sub{color:#73685f;font-size:14px;line-height:1.5;margin:0}
+.pill{white-space:nowrap;padding:9px 12px;border-radius:40px;color:#516b4d;background:#e8efdf;border:1px solid #d5e2cd;font-size:12px;font-weight:700}
+.dashboard{display:grid;grid-template-columns:minmax(0,1.28fr) minmax(0,.72fr);gap:18px;align-items:start}
+.panel{border:1px solid #e8dfd7;background:#fffdf9;border-radius:20px;box-shadow:0 8px 38px rgba(68,38,16,.035);padding:23px}
+.panel-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:20px}
+.panel-heading p{font-size:12px;color:#86766a;margin:5px 0 0}
+.form-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px 12px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.span2{grid-column:span 2}
+.field.full{grid-column:1/-1}
+label{font-weight:700;font-size:12px;color:#65574e}
+.field input,.field select,.field textarea,.search{border:1px solid #dfd5cc;border-radius:10px;background:#fff;padding:12px 10px;min-width:0;width:100%;color:#2d211a;outline-color:#b47b50;font-size:16px}
+.field textarea{resize:vertical;min-height:76px}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#b47b50}
+.unit{font-size:11px;font-weight:500;color:#97877d}
+.live{margin:18px 0 16px;border-radius:14px;background:#f7efe6;padding:13px 15px;display:flex;gap:14px;align-items:center;justify-content:space-between}
+.live .big{font-size:24px;font-weight:850;letter-spacing:-.05em}
+.live small{font-size:11px;color:#827067;display:block}
+.live .hint{max-width:68%;font-size:12px;line-height:1.5;color:#6e5140;text-align:right}
+.actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center}
+.primary,.secondary,.danger{padding:12px 15px;border-radius:11px;border:1px solid transparent;font-size:13px;font-weight:750;min-height:43px}
+.primary{background:#56382a;color:#fff}
+.primary:hover{background:#38251d}
+.secondary{background:#f5efe8;color:#594c42;border-color:#e7dbd0}
+.secondary:hover{background:#eae0d5}
+.danger{color:#9b4333;background:#fff1ee;border-color:#f1d1c9}
+.primary:focus-visible,.secondary:focus-visible,.danger:focus-visible{outline:3px solid #d5a87e;outline-offset:2px}
+.side{display:grid;gap:18px}
+.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.kpi{background:#fffdf9;border:1px solid #e8dfd7;border-radius:15px;padding:18px}
+.kpi .val{font-size:27px;font-weight:820;letter-spacing:-.06em}
+.kpi .key{color:#86796d;font-weight:700;font-size:11px;margin-bottom:7px}
+.chart-container{overflow:hidden}
+.chart-container svg{width:100%;height:auto;display:block}
+.small-muted{font-size:12px;color:#82766d;line-height:1.55}
+.tip{background:#f5f0ea;border-radius:12px;padding:12px 13px;line-height:1.55;font-size:12px;color:#6d5a4e}
+.latest{line-height:1.7;font-size:14px;color:#4b392e}
+.history{margin-top:18px}
+.history-top{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:14px;margin-bottom:18px}
+.history-tools{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.search{width:200px;font-size:13px;padding:10px 12px}
+.history-list{display:grid;gap:9px}
+.shot-row{border:1px solid #eee5de;background:#fffaf5;border-radius:12px;padding:14px 15px;display:grid;grid-template-columns:minmax(115px,1.2fr) minmax(150px,1.5fr) minmax(125px,1.4fr) auto;gap:12px;align-items:center}
+.shot-row strong{font-size:13px;display:block;overflow-wrap:anywhere}
+.shot-row small{color:#8b796b;font-size:11px;display:block;margin-top:3px}
+.shot-metric{font-size:13px;font-weight:700}
+.shot-metric em{display:block;font-style:normal;font-size:11px;font-weight:500;color:#8b796b;margin-top:3px}
+.row-buttons{display:flex;gap:5px}
+.row-buttons button{border:1px solid #e9dbd0;border-radius:7px;background:#fff;padding:8px 9px;font-size:11px;color:#694b39;font-weight:700}
+.row-buttons button:hover{background:#f7ecdf}
+.row-buttons .delete{color:#a23a2b}
+.empty{text-align:center;color:#88766a;background:#faf5ee;border:1px dashed #dfd2c7;border-radius:12px;padding:28px 15px;font-size:13px}
+.data-notice{padding:16px 4px 0;color:#82756b;font-size:12px;line-height:1.55}
+#notice{display:none;padding:10px 13px;margin-bottom:14px;border-radius:10px;font-size:13px;background:#eaf2e8;color:#355332}
+#notice.error{background:#ffece8;color:#9f3b2b}
+#storage-warning{display:none;background:#fff2dc;color:#774c26;border:1px solid #e9d1af;padding:11px 14px;border-radius:11px;margin-bottom:18px;font-size:12px;line-height:1.5}
+input[type=file]{display:none}
+@media(max-width:850px){.dashboard{grid-template-columns:1fr}.side{grid-template-columns:1fr 1fr;align-items:start}.kpis{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){header{padding:14px 18px}.container{padding:24px 14px 42px}.hero{align-items:start;flex-direction:column;gap:12px}.panel{padding:17px;border-radius:16px}.side{grid-template-columns:1fr}.kpis{grid-template-columns:1fr 1fr}.form-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.field.span2{grid-column:span 2}.shot-row{grid-template-columns:1fr 1fr;gap:10px}.row-buttons{justify-content:end}.search{width:100%}.history-tools{width:100%}.history-tools .secondary{flex:1}.live .hint{font-size:11px}.data-notice{padding:12px 0}}
+@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header><div class="brand"><span class="brand-mark" aria-hidden="true">☕</span> Shot Lab</div><a href="../index.html" title="Back to portfolio">← Website</a></header>
+<main class="container">
+  <div class="hero">
+    <div><p class="eyebrow">Espresso journal</p><h1>Make the next shot better.</h1><p class="sub">Log your Bambino Plus extractions. Keep your recipes, tasting notes, and progress together.</p></div>
+    <div class="pill" id="storage-badge">● Checking storage</div>
+  </div>
+  <div id="notice" role="status" aria-live="polite"></div>
+  <div id="storage-warning" role="alert"></div>
+  <div class="dashboard">
+    <section class="panel">
+      <div class="panel-heading"><div><h2 id="form-title">Log a shot</h2><p>Baratza + Breville Bambino Plus</p></div><button class="secondary" type="button" id="repeat-last">Reuse last</button></div>
+      <form id="shot-form">
+        <div class="form-grid">
+          <div class="field span2"><label for="timestamp">Date and time</label><input id="timestamp" type="datetime-local" required></div>
+          <div class="field span2"><label for="beans">Coffee beans / roast</label><input id="beans" maxlength="120" placeholder="e.g. Counter Culture Hologram"></div>
+          <div class="field span2"><label for="grinder">Grinder</label><select id="grinder"><option>Baratza Encore</option><option>Baratza Encore ESP</option><option>Baratza Sette 270Wi</option><option>Other</option></select></div>
+          <div class="field span2"><label for="grind">Grind setting</label><input id="grind" type="number" inputmode="decimal" min="0" max="999" step="any" value="8" required></div>
+          <div class="field"><label for="dose">Dose <span class="unit">(g)</span></label><input id="dose" type="number" inputmode="decimal" min=".1" max="50" step=".1" value="18" required></div>
+          <div class="field"><label for="yield">Yield <span class="unit">(g)</span></label><input id="yield" type="number" inputmode="decimal" min="0" max="250" step=".1" value="36" required></div>
+          <div class="field"><label for="seconds">Time <span class="unit">(s)</span></label><input id="seconds" type="number" inputmode="decimal" min=".1" max="240" step=".1" value="30" required></div>
+          <div class="field"><label for="score">Rating</label><select id="score"><option value="0">Not rated</option><option value="1">1 / 5</option><option value="2">2 / 5</option><option value="3">3 / 5</option><option value="4">4 / 5</option><option value="5">5 / 5</option></select></div>
+          <div class="field span2"><label for="taste">Taste</label><select id="taste"><option value="Not tasted">Not tasted yet</option><option>Balanced</option><option>Sour</option><option>Bitter</option><option>Weak / thin</option><option>Astringent</option></select></div>
+          <div class="field span2"><label for="basket">Basket</label><select id="basket"><option>Single wall (nonpressurized)</option><option>Double wall (pressurized)</option><option>Other / unknown</option></select></div>
+          <div class="field full"><label for="notes">Notes (optional)</label><textarea id="notes" maxlength="2000" placeholder="Sweetness, acidity, crema, puck prep, flow, changes for the next shot…"></textarea></div>
+        </div>
+        <div class="live"><div><small>Brew ratio</small><div class="big" id="preview-ratio">1:2.00</div></div><div class="hint" id="preview-advice">A useful baseline is 18 g in, 36 g out, in about 25–35 seconds.</div></div>
+        <div class="actions"><button class="primary" id="save-button" type="submit">Save shot</button><button class="secondary" id="cancel-button" type="button">Reset form</button></div>
+      </form>
+    </section>
+    <aside class="side">
+      <section class="kpis" aria-label="Shot statistics">
+        <div class="kpi"><div class="key">Total shots</div><div class="val" id="stat-total">0</div></div>
+        <div class="kpi"><div class="key">Average time</div><div class="val" id="stat-time">—</div></div>
+        <div class="kpi"><div class="key">Average ratio</div><div class="val" id="stat-ratio">—</div></div>
+        <div class="kpi"><div class="key">Average rating</div><div class="val" id="stat-rating">—</div></div>
+      </section>
+      <section class="panel"><div class="panel-heading"><div><h2>Extraction trend</h2><p>Latest 12 shots • seconds</p></div></div><div class="chart-container" id="trend-chart"></div><p class="small-muted">The shaded band marks the 25–35 s starting target. Taste matters more than hitting an exact time.</p></section>
+      <section class="panel"><div class="panel-heading"><h2>Last shot</h2></div><div id="last-shot" class="latest">No shots logged yet.</div><div class="tip" style="margin-top:14px">Timing starts when you press the brew button, including preinfusion. If the shot flows too fast, try a finer grind; if too slow, try coarser.</div></section>
+    </aside>
+  </div>
+  <section class="panel history">
+    <div class="history-top"><div><h2>Shot history</h2><p class="sub">Edit or repeat any recipe. Nothing is posted publicly.</p></div><div class="history-tools">
+      <input class="search" type="search" id="filter" aria-label="Search shots" placeholder="Search beans or notes">
+      <button class="secondary" type="button" id="csv-export">Export CSV</button>
+      <button class="secondary" type="button" id="json-export">Backup JSON</button>
+      <button class="secondary" type="button" id="import-button">Restore backup</button>
+      <input type="file" id="import-file" accept=".json,application/json">
+    </div></div>
+    <div id="history-list" class="history-list"><div class="empty">Loading shots…</div></div>
+  </section>
+  <div class="data-notice"><strong>Where is my data?</strong> Your shots are saved to a private browser database on this device, not to GitHub. They won't automatically appear on another phone or computer. Export a JSON backup periodically; use “Restore backup” to move or recover your shots. Clearing site data can erase local records.</div>
+</main>
+<script>
+(function(){
+"use strict";
+var $=function(id){return document.getElementById(id);};
+var DB_NAME="shot-lab-espresso-v1", STORE="records", KEY="shots", LS_KEY="shot-lab-espresso-backup-v1";
+var db=null, mode="none", shots=[], editingId=null;
+function localDateTime(value){var d=value?new Date(value):new Date();if(isNaN(d.getTime()))d=new Date();return new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,16);}
+function numeric(id){return Number($(id).value);}
+function one(n){return Number(n).toFixed(1);}
+function safe(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
+function ratio(s){return s.dose>0?(s.yield/s.dose).toFixed(2):"—";}
+function dateLabel(s){return new Date(s.timestamp).toLocaleString([], {month:"short",day:"numeric",year:"numeric",hour:"numeric",minute:"2-digit"});}
+function announce(message,isError){var el=$("notice");el.textContent=message;el.className=isError?"error":"";el.style.display="block";}
+function openDB(){return new Promise(function(resolve,reject){if(!("indexedDB" in window))return reject(new Error("IndexedDB unavailable"));var req=indexedDB.open(DB_NAME,1);req.onupgradeneeded=function(){if(!req.result.objectStoreNames.contains(STORE))req.result.createObjectStore(STORE);};req.onsuccess=function(){resolve(req.result);};req.onerror=function(){reject(req.error);};req.onblocked=function(){reject(new Error("Database blocked by another tab"));};});}
+function idbRead(){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,"readonly");var req=tx.objectStore(STORE).get(KEY);req.onsuccess=function(){resolve(Array.isArray(req.result)?req.result:[]);};req.onerror=function(){reject(req.error);};});}
+function idbWrite(data){return new Promise(function(resolve,reject){var tx=db.transaction(STORE,"readwrite");tx.objectStore(STORE).put(data,KEY);tx.oncomplete=function(){resolve();};tx.onerror=function(){reject(tx.error);};tx.onabort=function(){reject(tx.error);};});}
+async function load(){try{db=await openDB();shots=await idbRead();mode="IndexedDB";}catch(err){try{var check="__shot_test";localStorage.setItem(check,"ok");localStorage.removeItem(check);shots=JSON.parse(localStorage.getItem(LS_KEY)||"[]");if(!Array.isArray(shots))shots=[];mode="localStorage";}catch(e){mode="none";shots=[];}}
+ if(mode==="none"){$("storage-badge").textContent="⚠ Storage unavailable";$("storage-warning").textContent="Storage is blocked in this browser. Shots cannot be saved here. Open the site in Safari/Chrome with site storage enabled.";$("storage-warning").style.display="block";}
+ else{$("storage-badge").textContent="● Saved on this device";if(mode==="localStorage"){$("storage-warning").textContent="IndexedDB is unavailable, so this browser is using localStorage instead. Make regular JSON backups.";$("storage-warning").style.display="block";}}
+ shots=shots.filter(valid).sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});renderAll();
+}
+function persist(data){if(mode==="IndexedDB")return idbWrite(data);if(mode==="localStorage"){localStorage.setItem(LS_KEY,JSON.stringify(data));return Promise.resolve();}return Promise.reject(new Error("No available storage"));}
+function valid(s){return !!s&&typeof s.id==="string"&&/^[a-zA-Z0-9_-]{1,100}$/.test(s.id)&&typeof s.timestamp==="string"&&!isNaN(new Date(s.timestamp).getTime())&&typeof s.dose==="number"&&Number.isFinite(s.dose)&&s.dose>0&&s.dose<=50&&typeof s.yield==="number"&&Number.isFinite(s.yield)&&s.yield>=0&&s.yield<=250&&typeof s.seconds==="number"&&Number.isFinite(s.seconds)&&s.seconds>0&&s.seconds<=240&&typeof s.grind==="number"&&Number.isFinite(s.grind)&&s.grind>=0&&s.grind<=999&&typeof s.beans==="string"&&s.beans.length<=120&&typeof s.grinder==="string"&&s.grinder.length<=100&&typeof s.taste==="string"&&s.taste.length<=100&&typeof s.notes==="string"&&s.notes.length<=2000&&Number.isInteger(s.score)&&s.score>=0&&s.score<=5;}
+function makeId(){return (window.crypto&&crypto.randomUUID)?crypto.randomUUID():"s"+Date.now().toString(36)+Math.random().toString(36).slice(2,10);}
+function readForm(){var time=new Date($("timestamp").value);return {id:editingId||makeId(),timestamp:time.toISOString(),beans:$("beans").value.trim()||"Unspecified beans",grinder:$("grinder").value,grind:numeric("grind"),dose:numeric("dose"),yield:numeric("yield"),seconds:numeric("seconds"),score:numeric("score"),taste:$("taste").value,basket:$("basket").value,notes:$("notes").value.trim()};}
+function resetForm(){editingId=null;$("form-title").textContent="Log a shot";$("save-button").textContent="Save shot";$("shot-form").reset();$("timestamp").value=localDateTime();$("grinder").value="Baratza Encore";$("grind").value="8";$("dose").value="18";$("yield").value="36";$("seconds").value="30";$("score").value="0";$("taste").value="Not tasted";$("basket").value="Single wall (nonpressurized)";updatePreview();}
+function populate(s,copy){editingId=copy?null:s.id;$("form-title").textContent=copy?"New shot from recipe":"Edit shot";$("save-button").textContent=copy?"Save new shot":"Update shot";$("timestamp").value=copy?localDateTime():localDateTime(s.timestamp);["beans","grinder","grind","dose","yield","seconds","score","taste","basket","notes"].forEach(function(k){$(k).value=s[k]===undefined?"":s[k];});updatePreview();window.scrollTo({top:0,behavior:"smooth"});$("dose").focus();}
+function suggestion(secs,taste){if(!Number.isFinite(secs)||secs<=0)return "Enter an extraction time for guidance.";if(taste==="Sour")return "Tastes sour? Try grinding a little finer, or increase yield slightly.";if(taste==="Bitter"||taste==="Astringent")return "Tastes harsh? Try a shorter yield or a slightly coarser grind.";if(secs<25)return "Fast extraction: try one grind click finer and keep the dose and yield steady.";if(secs>35)return "Slow extraction: try one grind click coarser if the flavor needs it.";return "Within the initial 25–35 s window. Let the taste decide your next change.";}
+function updatePreview(){var d=numeric("dose"),y=numeric("yield"),s=numeric("seconds");$("preview-ratio").textContent=d>0&&y>=0?"1:"+(y/d).toFixed(2):"—";$("preview-advice").textContent=suggestion(s,$("taste").value);}
+function average(arr){return arr.length?arr.reduce(function(a,b){return a+b;},0)/arr.length:null;}
+function renderStats(){$("stat-total").textContent=String(shots.length);var t=average(shots.map(function(s){return s.seconds;}));$("stat-time").textContent=t===null?"—":one(t)+"s";var r=average(shots.map(function(s){return s.yield/s.dose;}));$("stat-ratio").textContent=r===null?"—":"1:"+r.toFixed(2);var scores=shots.filter(function(s){return s.score>0;});var score=average(scores.map(function(s){return s.score;}));$("stat-rating").textContent=score===null?"—":score.toFixed(1)+"/5";var last=shots[0];$("last-shot").innerHTML=last?("<strong>"+safe(last.beans)+"</strong><br>"+one(last.dose)+" g → "+one(last.yield)+" g ("+one(last.seconds)+" s)<br>Grind "+safe(last.grind)+" · "+safe(last.taste)+"<br><span class=\"small-muted\">"+safe(dateLabel(last))+"</span>"):"No shots logged yet.";}
+function chart(){var host=$("trend-chart");host.textContent="";if(!shots.length){host.innerHTML='<div class="empty">Your extraction trend will appear after your first shot.</div>';return;}
+var arr=shots.slice(0,12).reverse();var w=580,h=196,left=38,right=12,top=18,bottom=30,plotW=w-left-right,plotH=h-top-bottom;var ymax=Math.max(50,Math.ceil(Math.max.apply(null,arr.map(function(s){return s.seconds;}))/10)*10);var y=function(v){return top+plotH-(v/ymax)*plotH;};var x=function(i){return left+(arr.length===1?plotW/2:i*plotW/(arr.length-1));};
+var ns="http://www.w3.org/2000/svg";var svg=document.createElementNS(ns,"svg");svg.setAttribute("viewBox","0 0 "+w+" "+h);svg.setAttribute("role","img");svg.setAttribute("aria-label","Extraction times for the last "+arr.length+" shots");
+function el(tag,attributes,parent,txt){var n=document.createElementNS(ns,tag);Object.keys(attributes).forEach(function(k){n.setAttribute(k,attributes[k]);});if(txt!==undefined)n.textContent=txt;(parent||svg).appendChild(n);return n;}
+el("rect",{x:left,y:y(35),width:plotW,height:y(25)-y(35),fill:"#e8efe2",rx:"3"});[0,25,35,ymax].forEach(function(v){el("line",{x1:left,y1:y(v),x2:w-right,y2:y(v),stroke:"#e9e1d7","stroke-width":"1"});el("text",{x:left-7,y:y(v)+4,fill:"#89776c","font-size":"10","text-anchor":"end"},null,String(v));});
+if(arr.length>1){var points=arr.map(function(s,i){return x(i)+","+y(s.seconds);}).join(" ");el("polyline",{points:points,fill:"none",stroke:"#9f633b","stroke-width":"2.5","stroke-linecap":"round","stroke-linejoin":"round"});}
+arr.forEach(function(s,i){var circle=el("circle",{cx:x(i),cy:y(s.seconds),r:"5",fill:s.seconds>=25&&s.seconds<=35?"#648559":"#af6c3e",stroke:"#fff","stroke-width":"2"});el("title",{},circle,safe(dateLabel(s))+": "+one(s.seconds)+" s");});
+el("text",{x:left,y:h-8,fill:"#8b776c","font-size":"10"},null,"Older");el("text",{x:w-right,y:h-8,fill:"#8b776c","font-size":"10","text-anchor":"end"},null,"Newer");host.appendChild(svg);}
+function history(){var filter=$("filter").value.trim().toLowerCase();var filtered=shots.filter(function(s){return [s.beans,s.notes,s.taste,s.grinder].join(" ").toLowerCase().includes(filter);});var host=$("history-list");host.innerHTML="";if(!filtered.length){host.innerHTML='<div class="empty">'+(shots.length?"No shots match your search.":"No shots yet. Log your first extraction above!")+"</div>";return;}
+filtered.forEach(function(s){var row=document.createElement("div");row.className="shot-row";row.innerHTML='<div><strong>'+safe(s.beans)+'</strong><small>'+safe(dateLabel(s))+'</small></div><div class="shot-metric">'+one(s.dose)+' g → '+one(s.yield)+' g <em>Ratio 1:'+ratio(s)+'</em></div><div class="shot-metric">'+one(s.seconds)+' s · Grind '+safe(s.grind)+'<em>'+safe(s.taste)+(s.score?" · "+s.score+"/5":"")+'</em></div><div class="row-buttons"><button type="button" data-action="copy" title="Repeat as new shot">Repeat</button><button type="button" data-action="edit">Edit</button><button type="button" class="delete" data-action="delete">Delete</button></div>';row.querySelectorAll("button").forEach(function(b){b.addEventListener("click",function(){var action=b.getAttribute("data-action");if(action==="copy")populate(s,true);if(action==="edit")populate(s,false);if(action==="delete")remove(s);});});host.appendChild(row);});}
+function renderAll(){renderStats();chart();history();}
+async function remove(s){if(!window.confirm("Delete this shot? Exported backups will not be changed."))return;var before=shots.slice();shots=shots.filter(function(x){return x.id!==s.id;});try{await persist(shots);if(editingId===s.id)resetForm();renderAll();announce("Shot deleted.");}catch(e){shots=before;announce("Delete failed: "+e.message,true);}}
+$("shot-form").addEventListener("submit",async function(ev){ev.preventDefault();if(!this.reportValidity())return;var s;try{s=readForm();}catch(e){announce("Please enter a valid date and time.",true);return;}if(!valid(s)){announce("Please check the dose, yield, time, grind setting, and notes.",true);return;}var prior=shots.slice();shots=shots.filter(function(x){return x.id!==s.id;});shots.push(s);shots.sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});$("save-button").disabled=true;try{await persist(shots);renderAll();resetForm();announce("Saved. Your shot is stored on this device.");}catch(e){shots=prior;announce("Could not save this shot: "+e.message,true);}finally{$("save-button").disabled=false;}});
+$("cancel-button").addEventListener("click",resetForm);
+$("repeat-last").addEventListener("click",function(){if(shots.length)populate(shots[0],true);else announce("Save a shot first, then you can reuse its recipe.",true);});
+$("filter").addEventListener("input",history);
+["dose","yield","seconds","taste"].forEach(function(k){$(k).addEventListener("input",updatePreview);});
+function download(text,mime,filename){var blob=new Blob([text],{type:mime});var url=URL.createObjectURL(blob);var a=document.createElement("a");a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1000);}
+function backupName(ext){return "shot-lab-"+new Date().toISOString().slice(0,10)+"."+ext;}
+function csvField(v){var s=String(v==null?"":v);if(/^[\s]*[=+@-]/.test(s))s="'"+s;return '"'+s.replace(/"/g,'""')+'"';}
+$("json-export").addEventListener("click",function(){download(JSON.stringify({format:"shot-lab-v1",exportedAt:new Date().toISOString(),shots:shots},null,2),"application/json",backupName("json"));announce("JSON backup downloaded. Keep it somewhere safe.");});
+$("csv-export").addEventListener("click",function(){var cols=["timestamp","beans","grinder","grind","dose","yield","seconds","ratio","score","taste","basket","notes","id"];var lines=[cols.map(csvField).join(",")];shots.forEach(function(s){lines.push(cols.map(function(k){return csvField(k==="ratio"?ratio(s):s[k]);}).join(","));});download("\ufeff"+lines.join("\r\n"),"text/csv;charset=utf-8",backupName("csv"));announce("CSV exported for Excel or Google Sheets.");});
+$("import-button").addEventListener("click",function(){$("import-file").click();});
+$("import-file").addEventListener("change",async function(){var file=this.files[0];this.value="";if(!file)return;if(file.size>5000000){announce("Backup too large (maximum 5 MB).",true);return;}try{var data=JSON.parse(await file.text());var imported=Array.isArray(data)?data:data.shots;if(!Array.isArray(imported)||imported.length>10000||!imported.every(valid))throw new Error("Not a valid Shot Lab JSON backup.");var existing=new Set(shots.map(function(s){return s.id;}));var added=imported.filter(function(s){return !existing.has(s.id);});var next=shots.concat(added).sort(function(a,b){return b.timestamp.localeCompare(a.timestamp);});await persist(next);shots=next;renderAll();announce("Restored "+added.length+" new shot(s); "+(imported.length-added.length)+" already existed.");}catch(e){announce("Import failed: "+e.message,true);}});
+resetForm();load();
+})();
+</script>
+</body>
+</html>
