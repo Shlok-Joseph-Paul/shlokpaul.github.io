@@ -876,7 +876,42 @@ h3 {
 }
 
 .reading-section {
-  padding-top: 30px;
+  padding-top: 24px;
+}
+
+.reading-topics {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.reading-topics a {
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: 999px;
+  color: var(--accent);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.reading-topics a:hover {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.reading-topics a:focus-visible,
+.reading-item a:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 4px;
+}
+
+.reading-time-note {
+  margin: 14px 0 0;
+  color: var(--muted);
+  font-size: 0.75rem;
 }
 
 .reading-category-heading {
@@ -884,7 +919,7 @@ h3 {
   align-items: end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 20px;
+  margin-bottom: 16px;
 }
 
 .reading-category-heading .section-label,
@@ -893,13 +928,12 @@ h3 {
 }
 
 .reading-category-heading h2 {
-  max-width: 24ch;
   font-size: clamp(1.65rem, 4vw, 2.35rem);
-  text-align: right;
+  scroll-margin-top: 160px;
 }
 
 .reading-category-heading-secondary {
-  margin-top: 54px;
+  margin-top: 44px;
 }
 
 .reading-list {
@@ -911,23 +945,22 @@ h3 {
   grid-template-columns: minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
-  padding: 17px 4px;
+  padding: 14px 4px;
   border-bottom: 1px solid var(--border);
 }
 
 .reading-source {
-  margin-bottom: 4px;
-  color: var(--accent);
-  font-size: 0.69rem;
-  font-weight: 800;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.5;
 }
 
 .reading-length {
   color: var(--muted);
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 400;
+  white-space: nowrap;
 }
 
 .reading-length::before {
@@ -941,7 +974,7 @@ h3 {
   margin-bottom: 0;
   font-family: "Source Serif 4", Georgia, serif;
   font-size: clamp(1.15rem, 2vw, 1.45rem);
-  line-height: 1.18;
+  line-height: 1.25;
 }
 
 .reading-item a {
@@ -967,7 +1000,7 @@ h3 {
 
 .reading-series {
   align-items: start;
-  padding-block: 22px;
+  padding-block: 18px;
 }
 
 .reading-series h3 {
@@ -1248,7 +1281,19 @@ h3 {
   }
 
   .reading-category-heading-secondary {
-    margin-top: 48px;
+    margin-top: 38px;
+  }
+
+  .reading-page .nav {
+    flex-direction: column;
+  }
+
+  .reading-hero {
+    padding-bottom: 28px;
+  }
+
+  .reading-section {
+    padding-top: 24px;
   }
 
   .reading-category-heading {
