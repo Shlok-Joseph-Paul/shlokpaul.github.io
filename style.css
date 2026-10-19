@@ -957,13 +957,19 @@ h3 {
   line-height: 1.5;
 }
 
-.reading-length {
+.reading-length,
+.reading-added {
   color: var(--muted);
   font-weight: 400;
   white-space: nowrap;
 }
 
-.reading-length::before {
+.reading-added {
+  display: inline-block;
+}
+
+.reading-length::before,
+.reading-added::before {
   content: "·";
   margin: 0 0.55em;
   color: var(--border-strong);
